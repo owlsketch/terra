@@ -37,50 +37,228 @@
 		alert('SVG not supported');
 	}
 	else {
-		var title = SVG('title').size(600, 150); 
+		var terra = document.getElementById('terra');
+		var sz = {};
+		sz.terraWidth = 1800;
+		sz.terraHeight = 1800;
+		sz.terraWidthMid = sz.terraWidth/2;
+		sz.terraHeightMid = sz.terraHeight/2; 
+		sz.width = 600;
+		sz.height = 600;
+		sz.widthMid = sz.width/2;
+		sz.heightMid = sz.height/2;
 		
-		var width = 600;
-		var height = 600;
-		var widthMid = width/2;
-		var heightMid = height/2;
+		var origin = SVG('terra').size(sz.terraWidth, sz.terraHeight);
+		SVG.on(window, 'resize', function() { origin.spof() });
+
+		var mT = {}; //mapTiles
+		mT[-1] = {};
+		mT[0] = {};
+		mT[1] = {};
+
+
+	    mT[-1][1] = origin.nested().size(sz.width, sz.height);
+		mT[-1][1].center(sz.terraWidthMid-sz.width, sz.terraHeightMid-sz.height);
+
+		mT[-1][1].rec = {};
+		mT[-1][1].rec.tL = mT[-1][1].rect(10,10).attr({fill: '#222233'});
+		mT[-1][1].rec.tR = mT[-1][1].rect(10,10).attr({fill: '#222233', x: sz.width - 10});
+		mT[-1][1].rec.bL = mT[-1][1].rect(10,10).attr({fill: '#222233', y: sz.height - 9});
+		mT[-1][1].rec.bR = mT[-1][1].rect(10,10).attr({fill: '#222233', x: sz.width - 10, y: sz.height - 9});
+
+		mT[-1][1].container = mT[-1][1].circle(425).attr({stroke: '#aaaabb', fill: 'none', cx: sz.widthMid, cy: sz.heightMid });
+		mT[-1][1].origin = mT[-1][1].circle(150).attr({fill: '#222233', cx: sz.widthMid, cy: sz.heightMid });
+
+		mT[-1][1].house = {};
+		mT[-1][1].house[1] = mT[-1][1].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid });
+		mT[-1][1].house[2] = mT[-1][1].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid - 10 });
+		mT[-1][1].house[3] = mT[-1][1].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid + 10 });
+		mT[-1][1].house[4] = mT[-1][1].rect(10,6).attr({stroke: '#fff', x: sz.widthMid, y: sz.heightMid - 20 });
+
+		mT[-1][1].house[2].rotate(12.5);
+		mT[-1][1].house[4].rotate(25);
+
+		mT[-1][1].originTxt = mT[-1][1].text('(0,0)').attr({fill: '#fff', x: sz.widthMid + 14, y: sz.heightMid - 18});
+		mT[-1][1].originTxt.font({ family: 'Oswald', size: 10 });
+
+
+	    mT[0][1] = origin.nested().size(sz.width, sz.height);
+		mT[0][1].center(sz.terraWidthMid, sz.terraHeightMid-sz.height);
+
+		mT[0][1].rec = {};
+		mT[0][1].rec.tL = mT[0][1].rect(10,10).attr({fill: '#222233'});
+		mT[0][1].rec.tR = mT[0][1].rect(10,10).attr({fill: '#222233', x: sz.width - 10});
+		mT[0][1].rec.bL = mT[0][1].rect(10,10).attr({fill: '#222233', y: sz.height - 9});
+		mT[0][1].rec.bR = mT[0][1].rect(10,10).attr({fill: '#222233', x: sz.width - 10, y: sz.height - 9});
+
+		mT[0][1].container = mT[0][1].circle(425).attr({stroke: '#aaaabb', fill: 'none', cx: sz.widthMid, cy: sz.heightMid });
+		mT[0][1].origin = mT[0][1].circle(150).attr({fill: '#222233', cx: sz.widthMid, cy: sz.heightMid });
+
+		mT[0][1].house = {};
+		mT[0][1].house[1] = mT[0][1].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid });
+		mT[0][1].house[2] = mT[0][1].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid - 10 });
+		mT[0][1].house[3] = mT[0][1].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid + 10 });
+		mT[0][1].house[4] = mT[0][1].rect(10,6).attr({stroke: '#fff', x: sz.widthMid, y: sz.heightMid - 20 });
+
+		mT[0][1].house[2].rotate(12.5);
+		mT[0][1].house[4].rotate(25);
+
+		mT[0][1].originTxt = mT[0][1].text('(0,0)').attr({fill: '#fff', x: sz.widthMid + 14, y: sz.heightMid - 18});
+		mT[0][1].originTxt.font({ family: 'Oswald', size: 10 });
+	    
+		
+		mT[1][1] = origin.nested().size(sz.width, sz.height);
+		mT[1][1].center(sz.terraWidthMid+sz.width, sz.terraHeightMid-sz.height);
+
+		mT[1][1].rec = {};
+		mT[1][1].rec.tL = mT[1][1].rect(10,10).attr({fill: '#222233'});
+		mT[1][1].rec.tR = mT[1][1].rect(10,10).attr({fill: '#222233', x: sz.width - 10});
+		mT[1][1].rec.bL = mT[1][1].rect(10,10).attr({fill: '#222233', y: sz.height - 9});
+		mT[1][1].rec.bR = mT[1][1].rect(10,10).attr({fill: '#222233', x: sz.width - 10, y: sz.height - 9});
+
+		mT[1][1].container = mT[1][1].circle(425).attr({stroke: '#aaaabb', fill: 'none', cx: sz.widthMid, cy: sz.heightMid });
+		mT[1][1].origin = mT[1][1].circle(150).attr({fill: '#222233', cx: sz.widthMid, cy: sz.heightMid });
+
+		mT[1][1].house = {};
+		mT[1][1].house[1] = mT[1][1].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid });
+		mT[1][1].house[2] = mT[1][1].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid - 10 });
+		mT[1][1].house[3] = mT[1][1].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid + 10 });
+		mT[1][1].house[4] = mT[1][1].rect(10,6).attr({stroke: '#fff', x: sz.widthMid, y: sz.heightMid - 20 });
+
+		mT[1][1].house[2].rotate(12.5);
+		mT[1][1].house[4].rotate(25);
+
+		mT[1][1].originTxt = mT[1][1].text('(0,0)').attr({fill: '#fff', x: sz.widthMid + 14, y: sz.heightMid - 18});
+		mT[1][1].originTxt.font({ family: 'Oswald', size: 10 });
+
+
+		mT[-1][0] = origin.nested().size(sz.width, sz.height);
+		mT[-1][0].center(sz.terraWidthMid - sz.width, sz.terraHeightMid);
+
+		mT[-1][0].rec = {};
+		mT[-1][0].rec.tL = mT[-1][0].rect(10,10).attr({fill: '#222233'});
+		mT[-1][0].rec.tR = mT[-1][0].rect(10,10).attr({fill: '#222233', x: sz.width - 10});
+		mT[-1][0].rec.bL = mT[-1][0].rect(10,10).attr({fill: '#222233', y: sz.height - 9});
+		mT[-1][0].rec.bR = mT[-1][0].rect(10,10).attr({fill: '#222233', x: sz.width - 10, y: sz.height - 9});
+
+		mT[-1][0].container = mT[-1][0].circle(425).attr({stroke: '#aaaabb', fill: 'none', cx: sz.widthMid, cy: sz.heightMid });
+		mT[-1][0].origin = mT[-1][0].circle(150).attr({fill: '#222233', cx: sz.widthMid, cy: sz.heightMid });
+		
+		mT[-1][0].house = {};
+		mT[-1][0].house[1] = mT[-1][0].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid });
+		mT[-1][0].house[2] = mT[-1][0].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid - 10 });
+		mT[-1][0].house[3] = mT[-1][0].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid + 10 });
+		mT[-1][0].house[4] = mT[-1][0].rect(10,6).attr({stroke: '#fff', x: sz.widthMid, y: sz.heightMid - 20 });
+
+		mT[-1][0].house[2].rotate(12.5);
+		mT[-1][0].house[4].rotate(25);
+
+		mT[-1][0].originTxt = mT[-1][0].text('(0,0)').attr({fill: '#fff', x: sz.widthMid + 14, y:sz.heightMid - 18});
+		mT[-1][0].originTxt.font({ family: 'Oswald', size: 10 });
+
+
+
+		mT[0][0] = origin.nested().size(sz.width, sz.height);
+		mT[0][0].center(sz.terraWidthMid, sz.terraHeightMid);
+
+		mT[0][0].rec = {};
+		mT[0][0].rec.tL = mT[0][0].rect(10,10).attr({fill: '#222233'});
+		mT[0][0].rec.tR = mT[0][0].rect(10,10).attr({fill: '#222233', x: sz.width - 10});
+		mT[0][0].rec.bL = mT[0][0].rect(10,10).attr({fill: '#222233', y: sz.height - 9});
+		mT[0][0].rec.bR = mT[0][0].rect(10,10).attr({fill: '#222233', x: sz.width - 10, y: sz.height - 9});
+
+		mT[0][0].container = mT[0][0].circle(425).attr({stroke: '#aaaabb', fill: 'none', cx: sz.widthMid, cy: sz.heightMid });
+		mT[0][0].origin = mT[0][0].circle(150).attr({fill: '#222233', cx: sz.widthMid, cy: sz.heightMid });
+		
+		mT[0][0].house = {};
+		mT[0][0].house[1] = mT[0][0].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid });
+		mT[0][0].house[2] = mT[0][0].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid - 10 });
+		mT[0][0].house[3] = mT[0][0].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid + 10 });
+		mT[0][0].house[4] = mT[0][0].rect(10,6).attr({stroke: '#fff', x: sz.widthMid, y: sz.heightMid - 20 });
+
+		mT[0][0].house[2].rotate(12.5);
+		mT[0][0].house[4].rotate(25);
+
+		mT[0][0].originTxt = mT[0][0].text('(0,0)').attr({fill: '#fff', x: sz.widthMid + 14, y:sz.heightMid - 18});
+		mT[0][0].originTxt.font({ family: 'Oswald', size: 10 });
+		
+		mT[1][0] = origin.nested().size(sz.width, sz.height);
+		mT[1][0].center(sz.terraWidthMid+sz.width, sz.terraHeightMid);
+
+		mT[1][0].rec = {};
+		mT[1][0].rec.tL = mT[1][0].rect(10,10).attr({fill: '#222233'});
+		mT[1][0].rec.tR = mT[1][0].rect(10,10).attr({fill: '#222233', x: sz.width - 10});
+		mT[1][0].rec.bL = mT[1][0].rect(10,10).attr({fill: '#222233', y: sz.height - 9});
+		mT[1][0].rec.bR = mT[1][0].rect(10,10).attr({fill: '#222233', x: sz.width - 10, y: sz.height - 9});
+
+		mT[1][0].container = mT[1][0].circle(425).attr({stroke: '#aaaabb', fill: 'none', cx: sz.widthMid, cy: sz.heightMid });
+		mT[1][0].origin = mT[1][0].circle(150).attr({fill: '#222233', cx: sz.widthMid, cy: sz.heightMid });
+		
+		mT[1][0].house = {};
+		mT[1][0].house[1] = mT[1][0].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid });
+		mT[1][0].house[2] = mT[1][0].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid - 10 });
+		mT[1][0].house[3] = mT[1][0].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid + 10 });
+		mT[1][0].house[4] = mT[1][0].rect(10,6).attr({stroke: '#fff', x: sz.widthMid, y: sz.heightMid - 20 });
+
+		mT[1][0].house[2].rotate(12.5);
+		mT[1][0].house[4].rotate(25);
+
+		mT[1][0].originTxt = mT[1][0].text('(0,0)').attr({fill: '#fff', x: sz.widthMid + 14, y:sz.heightMid - 18});
+		mT[1][0].originTxt.font({ family: 'Oswald', size: 10 });
+		
+		
+		mT[-1][-1] = origin.nested().size(sz.width, sz.height);
+		mT[-1][-1].center(sz.terraWidthMid - sz.width, sz.terraHeightMid + sz.height);
+
+		mT[-1][-1].rec = {};
+		mT[-1][-1].rec.tL = mT[-1][-1].rect(10,10).attr({fill: '#222233'});
+		mT[-1][-1].rec.tR = mT[-1][-1].rect(10,10).attr({fill: '#222233', x: sz.width - 10});
+		mT[-1][-1].rec.bL = mT[-1][-1].rect(10,10).attr({fill: '#222233', y: sz.height - 9});
+		mT[-1][-1].rec.bR = mT[-1][-1].rect(10,10).attr({fill: '#222233', x: sz.width - 10, y: sz.height - 9});
+
+		mT[-1][-1].container = mT[-1][-1].circle(425).attr({stroke: '#aaaabb', fill: 'none', cx: sz.widthMid, cy: sz.heightMid });
+		mT[-1][-1].origin = mT[-1][-1].circle(150).attr({fill: '#222233', cx: sz.widthMid, cy: sz.heightMid });
+	
+		mT[-1][-1].house = {};
+		mT[-1][-1].house[1] = mT[-1][-1].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid });
+		mT[-1][-1].house[2] = mT[-1][-1].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid - 10 });
+		mT[-1][-1].house[3] = mT[-1][-1].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid + 10 });
+		mT[-1][-1].house[4] = mT[-1][-1].rect(10,6).attr({stroke: '#fff', x: sz.widthMid, y: sz.heightMid - 20 });
+
+		mT[-1][-1].house[2].rotate(12.5);
+		mT[-1][-1].house[4].rotate(25);
+
+		mT[-1][-1].originTxt = mT[-1][-1].text('(0,0)').attr({fill: '#fff', x: sz.widthMid + 14, y:sz.heightMid - 18});
+		mT[-1][-1].originTxt.font({ family: 'Oswald', size: 10 });
+
+
+
+		mT[0][-1] = origin.nested().size(sz.width, sz.height);
+		mT[0][-1].center(sz.terraWidthMid, sz.terraHeightMid + sz.height);
+
+		mT[0][-1].rec = {};
+		mT[0][-1].rec.tL = mT[0][-1].rect(10,10).attr({fill: '#222233'});
+		mT[0][-1].rec.tR = mT[0][-1].rect(10,10).attr({fill: '#222233', x: sz.width - 10});
+		mT[0][-1].rec.bL = mT[0][-1].rect(10,10).attr({fill: '#222233', y: sz.height - 9});
+		mT[0][-1].rec.bR = mT[0][-1].rect(10,10).attr({fill: '#222233', x: sz.width - 10, y: sz.height - 9});
+
+		mT[0][-1].container = mT[0][-1].circle(425).attr({stroke: '#aaaabb', fill: 'none', cx: sz.widthMid, cy: sz.heightMid });
+		mT[0][-1].origin = mT[0][-1].circle(150).attr({fill: '#222233', cx: sz.widthMid, cy: sz.heightMid });
+		
+		mT[0][-1].house = {};
+		mT[0][-1].house[1] = mT[0][-1].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid });
+		mT[0][-1].house[2] = mT[0][-1].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid - 10 });
+		mT[0][-1].house[3] = mT[0][-1].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid + 10 });
+		mT[0][-1].house[4] = mT[0][-1].rect(10,6).attr({stroke: '#fff', x: sz.widthMid, y: sz.heightMid - 20 });
+
+		mT[0][-1].house[2].rotate(12.5);
+		mT[0][-1].house[4].rotate(25);
+
+		mT[0][-1].originTxt = mT[0][-1].text('(0,0)').attr({fill: '#fff', x: sz.widthMid + 14, y:sz.heightMid - 18});
+		mT[0][-1].originTxt.font({ family: 'Oswald', size: 10 });
+		
 	}
-</script>
-<script language="javascript" type="text/javascript">
-	var nOne0 = {};
-	nOne0.draw = SVG('terra').size(width,height);
-</script>
-<script language="javascript" type="text/javascript"> 
-	var zero0 = {};
-	zero0.draw = SVG('terra').size(width, height);
-
-	SVG.on(window, 'resize', function() { draw.spof() });
-
-	zero0.rect = {};
-	zero0.rect.tL = zero0.draw.rect(10,10).attr({fill: '#222233'});
-	zero0.rect.tR = zero0.draw.rect(10,10).attr({fill: '#222233', x:590});
-	zero0.rect.bL = zero0.draw.rect(10,10).attr({fill: '#222233', y: 591});
-	zero0.rect.bR = zero0.draw.rect(10,10).attr({fill: '#222233', x:590, y:591});
-
-	zero0.container = zero0.draw.circle(425).attr({stroke: '#aaaabb', fill: 'none', cx: widthMid, cy: heightMid });
-	zero0.origin = zero0.draw.circle(150).attr({fill: '#222233', cx: widthMid, cy: heightMid });
-
-	zero0.house = {};
-	zero0.house[1] = zero0.draw.rect(10,6).attr({stroke: '#fff', x: widthMid-2, y: heightMid });
-	zero0.house[2] = zero0.draw.rect(10,6).attr({stroke: '#fff', x: widthMid-2, y: heightMid - 10 });
-	zero0.house[3] = zero0.draw.rect(10,6).attr({stroke: '#fff', x: widthMid-2, y: heightMid + 10 });
-	zero0.house[4] = zero0.draw.rect(10,6).attr({stroke: '#fff', x: widthMid, y: heightMid - 20 });
-
-	zero0.house[2].rotate(12.5);
-	zero0.house[4].rotate(25);
-
-	zero0.originTxt = zero0.draw.text('(0,0)').attr({fill: '#fff', x: widthMid + 14, y:heightMid - 18});
-	zero0.originTxt.font({ family: 'Oswald', size: 10 });
-
 </script> 
-<script language="javascript" type="text/javascript">
-	var one0 = {};
-	one0.draw = SVG('terra').size(width,height);
-</script>
-
+<script language="javascript" type="text/javascript" src="./mapTiles/oneN1.js"></script>
 </body>
 </html>
