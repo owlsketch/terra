@@ -17,7 +17,9 @@ var click = function() {
 		this.fill({color: '#222233'});
 	}
 };
-mT[0][0].origin.on('click', click);
+
+mT[0][0].origin.on('mouseover', click);
+mT[0][0].origin.on('mouseout', click);
 
 mT[0][0].house = {};
 mT[0][0].house[1] = mT[0][0].rect(10,6).attr({stroke: '#fff', x: sz.widthMid-2, y: sz.heightMid });

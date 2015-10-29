@@ -11,6 +11,7 @@
 	<!--
 	<script language="javascript" type="text/javascript" src="./js/svg.min.js"></script>
 	-->
+
 </head>
 <body>
 	<div id="about">
@@ -29,7 +30,7 @@
 <div id="push"></div>
 
 <footer>
-<p>2015, Gibran Garcia - <a href="https://owlsketch.com">owlsketch.com</a></p>
+<p>2015, Gibran Garcia - <a href="http://owlsketch.com">owlsketch.com</a></p>
 </footer>
 
 <script language="javascript" type="text/javascript">
@@ -54,6 +55,34 @@
 		//sets the default values for all inherited objects
 		origin.attr({'fill': '#fff'});
 
+		//setting conditions for dragging and moving origin svg
+		//implement as follows:
+		//when mouseDown, store reference to origin in another var
+		//when mouseUp, make other var equal null instead
+		//then have a condition, where if other var equals svg
+		//do something:
+		var isactive = false;
+		origin.mousedown(function() {
+			isactive = true;
+		});
+
+		//Do dragging calculations when the mouse is moving
+		//and it has been determined that the mouse button
+		//is pressing down
+		origin.mousemove(function(e) {
+			if(isactive) {
+			//get change in x and y positioning
+			console.log(e.clientX);
+			console.log(e.clientY);
+			console.log("is moving");
+			}
+		});
+
+		origin.mouseup(function() {
+			isactive = false;	
+		});
+		
+
 		var mT = {}; //mapTiles
 		mT[-1] = {};
 		mT[0] = {};
@@ -72,7 +101,6 @@
 
 <script language="javascript" type="text/javascript">
 //post-rendering
-	origin.rotate(45);
 </script>
 
 </body>
