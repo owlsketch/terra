@@ -57,10 +57,6 @@
 
 		//setting conditions for dragging and moving origin svg
 		//implement as follows:
-		//when mouseDown, store reference to origin in another var
-		//when mouseUp, make other var equal null instead
-		//then have a condition, where if other var equals svg
-		//do something:
 		var isactive = false;
 		origin.mousedown(function() {
 			isactive = true;
@@ -72,9 +68,16 @@
 		origin.mousemove(function(e) {
 			if(isactive) {
 			//get change in x and y positioning
-			console.log(e.clientX);
-			console.log(e.clientY);
-			console.log("is moving");
+			var movementX = e.movementX || e.mozMovementX || e.webkitMovementX;
+			var movementY = e.movementY || e.mozMovementY || e.webkitMovementX;
+			if(movementX) {
+				var totalMovement = origin.transform().x + movementX;
+				origin.transform({x: totalMovement});
+			}
+			if(movementY) {
+				var totalMovement = origin.transform().y + movementY;
+				origin.transform({y: totalMovement});
+			}
 			}
 		});
 
