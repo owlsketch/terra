@@ -1,6 +1,7 @@
 mT[1][0] = origin.nested().size(sz.width, sz.height);
 mT[1][0].center(sz.terraWidthMid+sz.width, sz.terraHeightMid);
 
+/*
 mT[1][0].rec = {};
 mT[1][0].rec.tL = mT[1][0].rect(10,10).attr({fill: '#222233'});
 mT[1][0].rec.tR = mT[1][0].rect(10,10).attr({fill: '#222233', x: sz.width - 10});
@@ -21,3 +22,4 @@ mT[1][0].house[4].rotate(25);
 
 mT[1][0].originTxt = mT[1][0].text('(0,0)').attr({fill: '#fff', x: sz.widthMid + 14, y:sz.heightMid - 18});
 mT[1][0].originTxt.font({ family: 'Oswald', size: 10 });
+*/
