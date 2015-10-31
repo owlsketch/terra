@@ -11,9 +11,11 @@
 	<!--
 	<script language="javascript" type="text/javascript" src="./js/svg.min.js"></script>
 	-->
+	<script language="javascript" type="text/javascript" src="./js/svg.draggable.js"></script>
 
 </head>
 <body>
+<div id="top">
 	<div id="about">
 		<h1> ABOUT </h1>
 		<p>
@@ -21,6 +23,11 @@
 		</p>
 	</div>
 
+	<div id="controls">
+		<p>+</p>	
+		<p>-</p>
+	</div>
+</div>
 
 <div id="wrapper">
 	<div id="title"></div>
@@ -49,42 +56,37 @@
 		sz.height = 600;
 		sz.widthMid = sz.width/2;
 		sz.heightMid = sz.height/2;
-		
-		var origin = SVG('terra').size(sz.terraWidth, sz.terraHeight);
-		SVG.on(window, 'resize', function() { origin.spof() });
+
+		/*structure 
+			Terra is the reference in our html
+			from Terra we create the galaxy.
+			The galaxy contains our origin, our world in its entirety.
+			Within origin, we have our mapTiles, the sections of lands.
+			Terra -> galaxy -> origin -> mapTiles
+
+			Why galaxy? Dragging is only allowed when the element is
+			the child of another svg element. Thus, if we wish, to move
+			origin, the container of all our maptiles, we must contain it
+			within something bigger. A galaxy. 
+		*/
+
+		var galaxy = SVG('terra').size(sz.terraWidth, sz.terraHeight);
+		galaxy.background = galaxy.rect(sz.terraWidth, sz.terraHeight);
+		galaxy.background.attr({'fill': '#fff', 'stroke': '#000'});
+
+		var origin = galaxy.nested().size(sz.terraWidth, sz.terraHeight);
 		//sets the default values for all inherited objects
 		origin.attr({'fill': '#fff'});
+		origin.draggable();
 
-		//setting conditions for dragging and moving origin svg
-		//implement as follows:
-		var isactive = false;
-		origin.mousedown(function() {
-			isactive = true;
-		});
+	
+		//cx and cy parameters, tell it to scale amongst the center of the object
+		origin.transform({ scaleX: .4, cx: sz.terraWidth/2, scaleY: .4, cy: sz.terraHeight/2});
 
-		//Do dragging calculations when the mouse is moving
-		//and it has been determined that the mouse button
-		//is pressing down
-		origin.mousemove(function(e) {
-			if(isactive) {
-			//get change in x and y positioning
-			var movementX = e.movementX || e.mozMovementX || e.webkitMovementX;
-			var movementY = e.movementY || e.mozMovementY || e.webkitMovementX;
-			if(movementX) {
-				var totalMovement = origin.transform().x + movementX;
-				origin.transform({x: totalMovement});
-			}
-			if(movementY) {
-				var totalMovement = origin.transform().y + movementY;
-				origin.transform({y: totalMovement});
-			}
-			}
-		});
-
-		origin.mouseup(function() {
-			isactive = false;	
-		});
-		
+		//can only drag where elements have been defined. So using
+		//a background so that dragging is always enabled.
+		origin.background = origin.rect(sz.terraWidth, sz.terraHeight);
+		origin.background.attr({'fill': '#fff', 'stroke': '#000'});
 
 		var mT = {}; //mapTiles
 		mT[-1] = {};
